@@ -52,7 +52,8 @@ def hash_the_password(user_password: str):
 
 
 def save_user(user_input: UserInput):
-    EVERY_USER.append(user_input)
+
+    EVERY_USER.append(User(user_id=user_input.user_id, user_email=user_input.user_email))
 
     hashed_password = hash_the_password(user_input.user_pswd)
     user_in_db = UserDB(**user_input.dict(), hashed_pswd=hashed_password, stored_date=datetime.now())  # append user's info as an object (db version) into a list: EVERY_USER_DB_VERSION
@@ -72,6 +73,8 @@ async def read_every_user_in_db_version() -> list:  # this is a private info but
 
     if not EVERY_USER:
         return ["There is no user"]
+
+
 
     return EVERY_USER
 
